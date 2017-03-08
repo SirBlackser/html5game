@@ -12,6 +12,6 @@ public class Controller {
     @RequestMapping({"/"})
     public String showHomepage(ModelMap model)
     {
-        return "game";
+        return "Asteroids";
     }
 }
