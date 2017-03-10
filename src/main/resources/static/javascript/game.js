@@ -29,9 +29,12 @@ var asteroidSizeEnum = {
     SMALL: 0
 }
 
+var startTime
 //Only once
 function init(){
     Crafty.load(asteroidLoader, null);
+    var dStart = new Date();
+    startTime = dStart.getTime();
 }
 
 var player;
@@ -114,10 +117,10 @@ function start(){
         .css({color: "#000"});
 
 
-    generateAsteroid(150, 10, 128, asteroidSizeEnum.BIG);
-    generateAsteroid(500, 300, 128, asteroidSizeEnum.BIG);
-    generateAsteroid(700, 450, 128, asteroidSizeEnum.BIG);
-    generateAsteroid(20, 600, 128, asteroidSizeEnum.BIG);
+    //generateAsteroid(150, 10, 128, asteroidSizeEnum.BIG);
+    //generateAsteroid(500, 300, 128, asteroidSizeEnum.BIG);
+    //generateAsteroid(700, 450, 128, asteroidSizeEnum.BIG);
+    //generateAsteroid(20, 600, 128, asteroidSizeEnum.BIG);
 
     player= Crafty.e('2D, DOM, Image, Controls, Collision')
         .attr({
@@ -223,6 +226,29 @@ function start(){
         });
 }
 
+function summonRandomAstroids()
+{
+    var width = Crafty.viewport.width;
+    var heigth = Crafty.viewport.height;
+    var Xspawn1 = Math.random()*width;
+    var Yspawn1 = Math.random()*heigth;
+    var Xspawn2 = Math.random()*width;
+    var Yspawn2 = Math.random()*heigth;
+    var astroid1 = Math.floor(Math.random()*3)
+    var astroid2 = Math.floor(Math.random()*3)
+    var astroid3 = Math.floor(Math.random()*3)
+    var astroid4 = Math.floor(Math.random()*3)
+
+
+    if(Math.random() > 0.5) {generateAsteroid(Xspawn1,0,astroid1, (astroid1+1)*32);}
+    if(Math.random() > 0.5) {generateAsteroid(Xspawn2,heigth,astroid2, (astroid2+1)*32);}
+    if(Math.random() > 0.5) {generateAsteroid(0,Yspawn1,astroid3, (astroid3+1)*32);}
+    if(Math.random() > 0.5) {generateAsteroid(width,Yspawn2,astroid4, (astroid4+1)*32);}
+
+    summonRandomAstroids();
+
+}
+
 function generateAsteroid(x, y, size, type){
 
     asteroid = Crafty.e(getRandomAsteroid())
@@ -257,6 +283,8 @@ function getRandomAsteroid(){
 
 init();
 start();
+setTimeout(summonRandomAstroids(), 500000);
+
 
 //Reset Game
 window.onresize = function(event) {
