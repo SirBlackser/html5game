@@ -109,6 +109,7 @@ function start(){
     //score display
      score = Crafty.e("2D, DOM, Text")
         .text("Score: 0")
+        .textFont({family: 'Arial', size:'30px', weight:'bold'})
         .attr({x: Crafty.viewport.width - 300, y: Crafty.viewport.height - 50, w: 200, h:50})
         .css({color: "#000"});
 
@@ -146,7 +147,6 @@ function start(){
             } else if(e.keyCode === Crafty.keys.UP_ARROW) {
                 this.move.up = true;
             } else if (e.keyCode === Crafty.keys.SPACE) {
-                console.log("Blast");
                 //create a bullet entity
                 Crafty.e("2D, DOM, Color, bullet")
                     .attr({
@@ -214,6 +214,12 @@ function start(){
                 this.y = Crafty.viewport.height;
             }
 
+        }).collision()
+        .onHit("asteroid", function (e) {
+            //if hit by a bullet increment the score
+            player.score = 0;
+            score.text("Score: " + player.score);
+            e[0].obj.destroy(); //destroy the bullet
         });
 }
 
