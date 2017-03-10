@@ -110,7 +110,7 @@ function start(){
      score = Crafty.e("2D, DOM, Text")
         .text("Score: 0")
         .attr({x: Crafty.viewport.width - 300, y: Crafty.viewport.height - 50, w: 200, h:50})
-        .css({color: "#fff"});
+        .css({color: "#000"});
 
 
     generateAsteroid(150, 10, 128, asteroidSizeEnum.BIG);
