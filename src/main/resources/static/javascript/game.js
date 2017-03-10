@@ -285,4 +285,6 @@ summonRandomAstroids();
 //Reset Game
 window.onresize = function(event) {
     Crafty.init(window.innerWidth,window.innerHeight, document.getElementById('game'));
+    score.x = Crafty.viewport.width - 300;
+    score.y= Crafty.viewport.height - 50;
 };
