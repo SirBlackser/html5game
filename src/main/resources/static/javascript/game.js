@@ -23,32 +23,102 @@ var asteroidLoader = {
     }
 };
 
-
+var asteroidSizeEnum = {
+    BIG: 2,
+    MEDIUM: 1,
+    SMALL: 0
+}
 
 //Only once
 function init(){
     Crafty.load(asteroidLoader, null);
 }
 
-var asteroid;
-var asteroids = [];
 var player;
+var score;
+
+var asteroid = Crafty.c("asteroid", {
+    init: function () {
+        this.origin("center");
+        this.attr({
+            x: 0, y: 0, w: 64, h: 64,
+            speed: Math.random() * 5,
+            xDir: Math.random(),
+            yDir: Math.random(),
+            asteroidType: asteroidSizeEnum.SMALL
+        })
+        .bind("EnterFrame", function () {
+            this.x += this.xDir * this.speed;
+            this.y += this.yDir * this.speed;
+
+            //if ship goes out of bounds, put him back
+            if (this._x > Crafty.viewport.width) {
+                this.x = -64;
+            }
+            if (this._x < -64) {
+                this.x = Crafty.viewport.width;
+            }
+            if (this._y > Crafty.viewport.height) {
+                this.y = -64;
+            }
+            if (this._y < -64) {
+                this.y = Crafty.viewport.height;
+            }
+        }).collision()
+        .onHit("bullet", function (e) {
+            //if hit by a bullet increment the score
+            player.score += 5;
+            score.text("Score: " + player.score);
+            e[0].obj.destroy(); //destroy the bullet
+
+            this.speed = Math.random() * 5;
+
+            this.xDir = -this.xDir;
+            this.yDir = -this.yDir;
+
+            switch (this.asteroidType) {
+                case asteroidSizeEnum.SMALL:
+                    this.destroy();
+                    return;
+                    break;
+                case asteroidSizeEnum.MEDIUM:
+                    this.asteroidType = asteroidSizeEnum.SMALL;
+                    this.w = 32;
+                    this.h = 32;
+                    //split into two asteroids by creating another asteroid
+                    generateAsteroid(this.x, this.y, 32, this.asteroidType);
+                    break;
+                case asteroidSizeEnum.BIG:
+                    this.asteroidType = asteroidSizeEnum.MEDIUM;
+                    this.w = 64;
+                    this.h = 64;
+                    //split into two asteroids by creating another asteroid
+                    generateAsteroid(this.x, this.y, 64, this.asteroidType);
+                    break;
+            }
+
+
+        });
+    }
+});
 
 //Restart without reloading objects etc that are still valid
 function start(){
     Crafty.init(window.innerWidth,window.innerHeight, document.getElementById('game'));
 
+    //score display
+     score = Crafty.e("2D, DOM, Text")
+        .text("Score: 0")
+        .attr({x: Crafty.viewport.width - 300, y: Crafty.viewport.height - 50, w: 200, h:50})
+        .css({color: "#fff"});
 
-    generateAsteroid(150, 10, 64);
-    asteroids.push(asteroid);
-    generateAsteroid(500, 300, 64);
-    asteroids.push(asteroid);
-    generateAsteroid(700, 450, 64);
-    asteroids.push(asteroid);
-    generateAsteroid(20, 600, 64);
-    asteroids.push(asteroid);
 
-    player= Crafty.e('2D, DOM, Image, Controls')
+    generateAsteroid(150, 10, 128, asteroidSizeEnum.BIG);
+    generateAsteroid(500, 300, 128, asteroidSizeEnum.BIG);
+    generateAsteroid(700, 450, 128, asteroidSizeEnum.BIG);
+    generateAsteroid(20, 600, 128, asteroidSizeEnum.BIG);
+
+    player= Crafty.e('2D, DOM, Image, Controls, Collision')
         .attr({
             move: {
                 left: false,
@@ -61,7 +131,8 @@ function start(){
             x: 400,
             y: 300,
             w: 40,
-            h: 40
+            h: 40,
+            score:0
         })
         .origin("center")
         // .color('#F00')
@@ -77,7 +148,7 @@ function start(){
             } else if (e.keyCode === Crafty.keys.SPACE) {
                 console.log("Blast");
                 //create a bullet entity
-                Crafty.e("2D, DOM, Color")
+                Crafty.e("2D, DOM, Color, bullet")
                     .attr({
                         x: this._x+20,
                         y: this._y+20,
@@ -96,8 +167,7 @@ function start(){
                         if(this._x > Crafty.viewport.width || this._x < 0 || this._y > Crafty.viewport.height || this._y < 0) {
                             this.destroy();
                         }
-                    })
-                    .checkHits(asteroids);
+                    });
             }
         }).bind("KeyUp", function(e) {
             //on key up, set the move booleans to false
@@ -147,31 +217,14 @@ function start(){
         });
 }
 
-function generateAsteroid(x, y, size){
+function generateAsteroid(x, y, size, type){
 
     asteroid = Crafty.e(getRandomAsteroid())
-            .attr({x:x, y:y, w:size, h:size,
-                speed: Math.random()*5,
-                xDir: Math.random(),
-                yDir: Math.random()})
-            .bind("EnterFrame", function(){
-                this.x += this.xDir*this.speed;
-                this.y += this.yDir*this.speed;
-
-                //if ship goes out of bounds, put him back
-                if(this._x > Crafty.viewport.width) {
-                    this.x = -64;
-                }
-                if(this._x < -64) {
-                    this.x =  Crafty.viewport.width;
-                }
-                if(this._y > Crafty.viewport.height) {
-                    this.y = -64;
-                }
-                if(this._y < -64) {
-                    this.y = Crafty.viewport.height;
-                }
-            });
+        .attr({x:x, y:y, w:size, h:size,
+            speed: Math.random()*5,
+            xDir: Math.random(),
+            yDir: Math.random(),
+            asteroidType: type});
 
 }
 
@@ -179,18 +232,18 @@ function getRandomAsteroid(){
     var s;
 
     switch (Math.floor(Math.random()*10)) {
-        case 0: s = "2D, Canvas, a01";
+        case 0: s = "2D, Canvas, a01, Collision, asteroid";
             break;
-        case 1: s = "2D, Canvas, a02";
+        case 1: s = "2D, Canvas, a02, Collision, asteroid";
             break;
-        case 2: s = "2D, Canvas, a03";
+        case 2: s = "2D, Canvas, a03, Collision, asteroid";
             break;
-        case 3: s = "2D, Canvas, a04";
+        case 3: s = "2D, Canvas, a04, Collision, asteroid";
             break;
-        case 4: s = "2D, Canvas, a05";
+        case 4: s = "2D, Canvas, a05, Collision, asteroid";
             break;
         default:
-            s = "2D, Canvas, a06";
+            s = "2D, Canvas, a06, Collision, asteroid";
             break;
     }
     return s;
