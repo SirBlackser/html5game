@@ -234,18 +234,14 @@ function summonRandomAstroids()
     var Yspawn1 = Math.random()*heigth;
     var Xspawn2 = Math.random()*width;
     var Yspawn2 = Math.random()*heigth;
-    var astroid1 = Math.floor(Math.random()*3)
-    var astroid2 = Math.floor(Math.random()*3)
-    var astroid3 = Math.floor(Math.random()*3)
-    var astroid4 = Math.floor(Math.random()*3)
 
 
-    if(Math.random() > 0.5) {generateAsteroid(Xspawn1,0,astroid1, (astroid1+1)*32);}
-    if(Math.random() > 0.5) {generateAsteroid(Xspawn2,heigth,astroid2, (astroid2+1)*32);}
-    if(Math.random() > 0.5) {generateAsteroid(0,Yspawn1,astroid3, (astroid3+1)*32);}
-    if(Math.random() > 0.5) {generateAsteroid(width,Yspawn2,astroid4, (astroid4+1)*32);}
+    if(Math.random() > 0.5) {generateAsteroid(Xspawn1,0, 128, asteroidSizeEnum.BIG);}
+    if(Math.random() > 0.5) {generateAsteroid(Xspawn2,heigth,128, asteroidSizeEnum.BIG);}
+    if(Math.random() > 0.5) {generateAsteroid(0,Yspawn1, 128, asteroidSizeEnum.BIG);}
+    if(Math.random() > 0.5) {generateAsteroid(width,Yspawn2, 128, asteroidSizeEnum.BIG);}
 
-    summonRandomAstroids();
+    setTimeout(summonRandomAstroids, 5000);
 
 }
 
@@ -283,7 +279,7 @@ function getRandomAsteroid(){
 
 init();
 start();
-setTimeout(summonRandomAstroids(), 500000);
+summonRandomAstroids();
 
 
 //Reset Game
