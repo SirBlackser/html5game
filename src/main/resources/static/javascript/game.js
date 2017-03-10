@@ -230,18 +230,19 @@ function summonRandomAstroids()
 {
     var width = Crafty.viewport.width;
     var heigth = Crafty.viewport.height;
-    var Xspawn1 = Math.random()*width;
-    var Yspawn1 = Math.random()*heigth;
-    var Xspawn2 = Math.random()*width;
-    var Yspawn2 = Math.random()*heigth;
+    var Xspawn1 = Math.random()*width+10;
+    var Yspawn1 = Math.random()*heigth+10;
+    var Xspawn2 = Math.random()*width+10;
+    var Yspawn2 = Math.random()*heigth+10;
+    player.score
 
 
-    if(Math.random() > 0.5) {generateAsteroid(Xspawn1,0, 128, asteroidSizeEnum.BIG);}
-    if(Math.random() > 0.5) {generateAsteroid(Xspawn2,heigth,128, asteroidSizeEnum.BIG);}
-    if(Math.random() > 0.5) {generateAsteroid(0,Yspawn1, 128, asteroidSizeEnum.BIG);}
-    if(Math.random() > 0.5) {generateAsteroid(width,Yspawn2, 128, asteroidSizeEnum.BIG);}
+    if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(Xspawn1,-10, 128, asteroidSizeEnum.BIG);}
+    if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(Xspawn2,heigth,128, asteroidSizeEnum.BIG);}
+    if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(-10,Yspawn1, 128, asteroidSizeEnum.BIG);}
+    if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(width,Yspawn2, 128, asteroidSizeEnum.BIG);}
 
-    setTimeout(summonRandomAstroids, 5000);
+    setTimeout(summonRandomAstroids, 5000-Math.floor(player.score/100));
 
 }
 
