@@ -10,8 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @org.springframework.stereotype.Controller
 public class Controller {
     @RequestMapping({"/"})
-    public String showHomepage(ModelMap model)
+    public String showHome(ModelMap model)
+    {
+        return "home";
+    }
+
+    @RequestMapping({"/asteroids"})
+    public String showAsteroids(ModelMap model)
     {
         return "Asteroids";
+    }
+
+    @RequestMapping({"/munchkin"})
+    public String showMunchkin(ModelMap model)
+    {
+        return "Munchkin";
     }
 }

@@ -50,58 +50,58 @@ var asteroid = Crafty.c("asteroid", {
             yDir: Math.random(),
             asteroidType: asteroidSizeEnum.SMALL
         })
-        .bind("EnterFrame", function () {
-            this.x += this.xDir * this.speed;
-            this.y += this.yDir * this.speed;
+            .bind("EnterFrame", function () {
+                this.x += this.xDir * this.speed;
+                this.y += this.yDir * this.speed;
 
-            //if ship goes out of bounds, put him back
-            if (this._x > Crafty.viewport.width) {
-                this.x = -64;
-            }
-            if (this._x < -64) {
-                this.x = Crafty.viewport.width;
-            }
-            if (this._y > Crafty.viewport.height) {
-                this.y = -64;
-            }
-            if (this._y < -64) {
-                this.y = Crafty.viewport.height;
-            }
-        }).collision()
-        .onHit("bullet", function (e) {
-            //if hit by a bullet increment the score
-            player.score += 5;
-            score.text("Score: " + player.score);
-            e[0].obj.destroy(); //destroy the bullet
+                //if ship goes out of bounds, put him back
+                if (this._x > Crafty.viewport.width) {
+                    this.x = -64;
+                }
+                if (this._x < -64) {
+                    this.x = Crafty.viewport.width;
+                }
+                if (this._y > Crafty.viewport.height) {
+                    this.y = -64;
+                }
+                if (this._y < -64) {
+                    this.y = Crafty.viewport.height;
+                }
+            }).collision()
+            .onHit("bullet", function (e) {
+                //if hit by a bullet increment the score
+                player.score += 5;
+                score.text("Score: " + player.score);
+                e[0].obj.destroy(); //destroy the bullet
 
-            this.speed = Math.random() * 5;
+                this.speed = Math.random() * 5;
 
-            this.xDir = -this.xDir;
-            this.yDir = -this.yDir;
+                this.xDir = -this.xDir;
+                this.yDir = -this.yDir;
 
-            switch (this.asteroidType) {
-                case asteroidSizeEnum.SMALL:
-                    this.destroy();
-                    return;
-                    break;
-                case asteroidSizeEnum.MEDIUM:
-                    this.asteroidType = asteroidSizeEnum.SMALL;
-                    this.w = 32;
-                    this.h = 32;
-                    //split into two asteroids by creating another asteroid
-                    generateAsteroid(this.x, this.y, 32, this.asteroidType);
-                    break;
-                case asteroidSizeEnum.BIG:
-                    this.asteroidType = asteroidSizeEnum.MEDIUM;
-                    this.w = 64;
-                    this.h = 64;
-                    //split into two asteroids by creating another asteroid
-                    generateAsteroid(this.x, this.y, 64, this.asteroidType);
-                    break;
-            }
+                switch (this.asteroidType) {
+                    case asteroidSizeEnum.SMALL:
+                        this.destroy();
+                        return;
+                        break;
+                    case asteroidSizeEnum.MEDIUM:
+                        this.asteroidType = asteroidSizeEnum.SMALL;
+                        this.w = 32;
+                        this.h = 32;
+                        //split into two asteroids by creating another asteroid
+                        generateAsteroid(this.x, this.y, 32, this.asteroidType);
+                        break;
+                    case asteroidSizeEnum.BIG:
+                        this.asteroidType = asteroidSizeEnum.MEDIUM;
+                        this.w = 64;
+                        this.h = 64;
+                        //split into two asteroids by creating another asteroid
+                        generateAsteroid(this.x, this.y, 64, this.asteroidType);
+                        break;
+                }
 
 
-        });
+            });
     }
 });
 
@@ -110,7 +110,7 @@ function start(){
     Crafty.init(window.innerWidth,window.innerHeight, document.getElementById('game'));
 
     //score display
-     score = Crafty.e("2D, DOM, Text")
+    score = Crafty.e("2D, DOM, Text")
         .text("Score: 0")
         .textFont({family: 'Arial', size:'30px', weight:'bold'})
         .attr({x: Crafty.viewport.width - 300, y: Crafty.viewport.height - 50, w: 200, h:50})
