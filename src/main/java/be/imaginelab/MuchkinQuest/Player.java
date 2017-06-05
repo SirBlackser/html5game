@@ -55,7 +55,7 @@ public class Player {
         if(munchkinQuest.getMQMap().monsterOnPlayerTile(this)){
             //TODO COMBAT
         }else{
-
+            //TODO MOVEMENT
         }
     }
 }
