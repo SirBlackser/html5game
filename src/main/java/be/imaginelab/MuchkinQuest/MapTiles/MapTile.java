@@ -1,6 +1,7 @@
 package be.imaginelab.MuchkinQuest.MapTiles;
 
 import be.imaginelab.MuchkinQuest.Class;
+import be.imaginelab.MuchkinQuest.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,8 @@ abstract public class MapTile {
 
     List<Class.CLASS> bonuses = new ArrayList<>();
     List<Class.CLASS> disadvantage = new ArrayList<>();
+
+    public List<Player> players = new ArrayList<Player>();
 
     public MapTile(){}
 
