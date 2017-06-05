@@ -237,7 +237,7 @@ function summonRandomAstroids()
     player.score
 
 
-    Math.random()+player.score/1000 > 0.5) {generateAsteroid(Xspawn1,-128, 128, asteroidSizeEnum.BIG);}
+    if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(Xspawn1,-128, 128, asteroidSizeEnum.BIG);}
     if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(Xspawn2,heigth+128,128, asteroidSizeEnum.BIG);}
     if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(-128,Yspawn1, 128, asteroidSizeEnum.BIG);}
     if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(width+128,Yspawn2, 128, asteroidSizeEnum.BIG);}
