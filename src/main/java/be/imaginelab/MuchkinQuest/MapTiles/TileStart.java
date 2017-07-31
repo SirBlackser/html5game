@@ -13,5 +13,6 @@ public class TileStart extends MapTile{
     public TileStart(){
         this.searchable=false;
         this.monstersEndHere=false;
+        location = new Location();
     }
 }

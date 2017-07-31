@@ -1,5 +1,10 @@
 package be.imaginelab.MuchkinQuest;
 
+import be.imaginelab.MuchkinQuest.DXMs.DXM;
+import be.imaginelab.MuchkinQuest.MapTiles.MapTile;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +16,22 @@ public class MunchkinQuest {
 
     public static void main(String args[]){
         new MunchkinQuest();
+    }
+
+    public MunchkinQuest(){
+        JFrame f = new JFrame("MyFrame");
+        Canvas c = new Canvas();
+        Terminal t = new Terminal();
+        c.addMouseListener(t);
+        c.addKeyListener(t);
+        c.setVisible(true);
+
+        f.add(c);
+        f.setSize(new Dimension(400,400));
+        f.setVisible(true);
+
+        while (true);
+
     }
 
     public int numPlayers = 2;
@@ -47,6 +68,8 @@ public class MunchkinQuest {
     public MQMap getMQMap(){
         return MQMap;
     }
+    public MapTile getMQStartTile() {return MQMap.map.get(0);}
+
 
     public List<DXM> getDXM(int number){
         List<DXM> chosen = new ArrayList<>();

@@ -1,6 +1,6 @@
 package be.imaginelab.MuchkinQuest.MapTiles;
 
-import be.imaginelab.MuchkinQuest.Class;
+import be.imaginelab.MuchkinQuest.Player;
 
 /**
  * Created by arthu on 30/05/2017.
@@ -12,7 +12,7 @@ public class TileArmoury extends MapTile{
     }
 
     public TileArmoury(){
-        this.bonuses.add(Class.CLASS.WARRIOR);
-        this.bonuses.add(Class.CLASS.PALADIN);
+        this.bonuses.add(Player.CLASS.WARRIOR);
+        this.bonuses.add(Player.CLASS.PALADIN);
     }
 }
