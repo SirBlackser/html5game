@@ -1,7 +1,9 @@
 package be.imaginelab.MuchkinQuest.MapTiles;
 
+import be.imaginelab.MuchkinQuest.DXMs.Classes.Class;
 import be.imaginelab.MuchkinQuest.Door;
 import be.imaginelab.MuchkinQuest.Player;
+import be.imaginelab.MuchkinQuest.Treasures.Treasure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +28,18 @@ abstract public class MapTile {
     }
 
     //In order up, right, down, left
-    public MapTile[] mapTiles = new MapTile[4];
+    public MapTile[] neighbours = new MapTile[4];
     public Door[] doors = new Door[4];
     public Location location;
 
     boolean searchable = true;
     boolean monstersEndHere = true;
 
-    List<Player.CLASS> bonuses = new ArrayList<>();
-    List<Player.CLASS> disadvantage = new ArrayList<>();
+    List<Class.CLASSES> bonuses = new ArrayList<>();
+    List<Class.CLASSES> disadvantage = new ArrayList<>();
+
+    public int gold = 0;
+    public List<Treasure> treasures = new ArrayList<>();
 
     public List<Player> players = new ArrayList<Player>();
 

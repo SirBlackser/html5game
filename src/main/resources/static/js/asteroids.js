@@ -27,9 +27,9 @@ var asteroidSizeEnum = {
     BIG: 2,
     MEDIUM: 1,
     SMALL: 0
-}
+};
 
-var startTime
+var startTime;
 //Only once
 function init(){
     Crafty.load(asteroidLoader, null);
@@ -234,7 +234,7 @@ function summonRandomAstroids()
     var Yspawn1 = Math.random()*heigth+10;
     var Xspawn2 = Math.random()*width+10;
     var Yspawn2 = Math.random()*heigth+10;
-    player.score
+    player.score;
 
 
     if(Math.random()+player.score/1000 > 0.5) {generateAsteroid(Xspawn1,-128, 128, asteroidSizeEnum.BIG);}

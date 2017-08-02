@@ -8,6 +8,11 @@ import java.util.EventListener;
  * Created by Arthur on 31/07/2017.
  */
 public class Terminal implements MouseListener, KeyListener{
+    MunchkinQuest munchkinQuest;
+    public Terminal(MunchkinQuest munchkinQuest){
+        this.munchkinQuest = munchkinQuest;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         //System.out.println("Click");
@@ -36,6 +41,11 @@ public class Terminal implements MouseListener, KeyListener{
     @Override
     public void keyTyped(KeyEvent e) {
         //System.out.println("Typed");
+        switch (e.getKeyChar()){
+            case 'a':
+                System.out.println("");
+                //munchkinQuest.
+        }
     }
 
     @Override

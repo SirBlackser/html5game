@@ -4,11 +4,9 @@ import be.imaginelab.MuchkinQuest.MapTiles.Location;
 import be.imaginelab.MuchkinQuest.MapTiles.MapTile;
 import be.imaginelab.MuchkinQuest.MapTiles.TileArmoury;
 import be.imaginelab.MuchkinQuest.MapTiles.TileStart;
+import be.imaginelab.MuchkinQuest.Treasures.Treasure;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by arthu on 5/06/2017.
@@ -16,12 +14,16 @@ import java.util.Map;
 public class MQMap {
 
     //All remaining cards in the deck
-    List<MapTile> deck = new ArrayList<>();
+    public List<MapTile> deck = new ArrayList<>();
 
+    //Map is a list of tiles linked together
     MapTile startTile = new TileStart();
     List<MapTile> map = new ArrayList<>();
-    Map<MapTile, List<Monster>> monsterMap = new HashMap<>();
-    Map<Player, MapTile> playerLocations = new HashMap<>();
+
+    //Monster, Player and Item locations are stored in a HashMap for easy access;
+    public Map<MapTile, List<Treasure>> itemLocations = new HashMap<>();
+    public Map<MapTile, List<Monster>> monsterLocations = new HashMap<>();
+    public Map<Player, MapTile> playerLocations = new HashMap<>();
 
     private MunchkinQuest munchkinQuest;
 
@@ -64,7 +66,7 @@ public class MQMap {
 
         //Add doors to tile
         newTile.doors = getNeighbouringDoors(newTile);
-        newTile.mapTiles = getNeighbouringTiles(newTile);
+        newTile.neighbours = getNeighbouringTiles(newTile);
     }
 
     public MapTile getTileByLocation(int x, int y){
@@ -81,25 +83,25 @@ public class MQMap {
         MapTile[] tiles = new MapTile[4];
         //up
         try{
-            tiles[0] = map.get(map.indexOf(new Location(x,y-1))).mapTiles[MapTile.DIRECTION.DOWN.ordinal()];
+            tiles[0] = map.get(map.indexOf(new Location(x,y-1))).neighbours[MapTile.DIRECTION.DOWN.ordinal()];
         }catch (IndexOutOfBoundsException e){
             tiles[0] = null;
         }
         //right
         try{
-            tiles[1] = map.get(map.indexOf(new Location(x+1,y))).mapTiles[MapTile.DIRECTION.LEFT.ordinal()];
+            tiles[1] = map.get(map.indexOf(new Location(x+1,y))).neighbours[MapTile.DIRECTION.LEFT.ordinal()];
         }catch (IndexOutOfBoundsException e){
             tiles[1] = null;
         }
         //down
         try{
-            tiles[2] = map.get(map.indexOf(new Location(x,y+1))).mapTiles[MapTile.DIRECTION.UP.ordinal()];
+            tiles[2] = map.get(map.indexOf(new Location(x,y+1))).neighbours[MapTile.DIRECTION.UP.ordinal()];
         }catch (IndexOutOfBoundsException e){
             tiles[2] = null;
         }
         //left
         try{
-            tiles[3] = map.get(map.indexOf(new Location(x-1,y))).mapTiles[MapTile.DIRECTION.RIGHT.ordinal()];
+            tiles[3] = map.get(map.indexOf(new Location(x-1,y))).neighbours[MapTile.DIRECTION.RIGHT.ordinal()];
         }catch (IndexOutOfBoundsException e){
             tiles[3] = null;
         }
@@ -141,12 +143,34 @@ public class MQMap {
     public void setPlayerOnStartTile(Player player){
         playerLocations.put(player, map.get(0));
     }
+    public boolean isAnyPlayerOnTile(MapTile tile){
+        return playerLocations.containsValue(tile);
+    }
 
     public boolean monsterOnPlayerTile(Player player){
-        if(monsterMap.get(playerLocations.get(player)).size() > 0){
-            return true;
-        }else
+        if(monsterLocations.get(playerLocations.get(player)) == null){
             return false;
+        }else {
+            return true;
+        }
+
+    }
+
+    public List<Monster> findMonstersCloseTo(MapTile mapTile, int size){
+        List<Monster> monsters = new ArrayList<>();
+        for(int i = 0; i<size; i++){
+            for(int j = 0; j<4; j++){
+                MapTile tile = mapTile.neighbours[j];
+                monsters.addAll(monsterLocations.get(tile));
+            }
+        }
+        return monsters;
+    }
+
+    public void moveMonsterTowards(List<Monster> monsters, MapTile tile){
+        //TODO implement method
+        //Just move in relative direction based on location
+        //AND THE MOVES HAVE TO BE LEGAL
     }
 
 }

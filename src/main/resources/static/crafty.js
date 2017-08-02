@@ -44,7 +44,7 @@ function defaultClearTimeout () {
     } catch (e) {
         cachedClearTimeout = defaultClearTimeout;
     }
-} ())
+} ());
 function runTimeout(fun) {
     if (cachedSetTimeout === setTimeout) {
         //normal enviroments in sane situations
@@ -5916,7 +5916,7 @@ module.exports = {
         if (typeof uninit !== 'undefined') {
             this._scenes[name].uninitialize = uninit;
         }
-        return;
+
 
     },
 
@@ -5971,7 +5971,7 @@ module.exports = {
             Crafty.error('The scene "' + name + '" does not exist');
         }
 
-        return;
+
 
     }
 };
@@ -13501,7 +13501,7 @@ Crafty.extend({
                     c.obj.pause();
                 }
             }
-            return;
+
         },
         /**
          * #Crafty.audio._mute
