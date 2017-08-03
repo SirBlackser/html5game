@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by arthu on 30/05/2017.
  */
-abstract public class MapTile {
+abstract public class MapTile implements Comparable {
 
     public enum DIRECTION{
         UP, RIGHT, DOWN, LEFT
@@ -26,6 +26,8 @@ abstract public class MapTile {
             default: return DIRECTION.UP;
         }
     }
+
+    public String name;
 
     //In order up, right, down, left
     public MapTile[] neighbours = new MapTile[4];
@@ -59,4 +61,32 @@ abstract public class MapTile {
     }
 
     abstract public void special();
+
+    @Override
+    public int compareTo(Object o){
+        if(o.getClass().equals(MapTile.class)) {
+            MapTile mapTile = (MapTile) o;
+            if (this.location.y < mapTile.location.y){
+                return 1;
+            }else if(mapTile.location.y < this.location.y){
+                return -1;
+            }else{
+                //y axis == same
+                if (mapTile.location.x > this.location.x){
+                    return 1;
+                }else if(mapTile.location.x < this.location.x) {
+                    return -1;
+                }else{
+                    return 0;
+                }
+            }
+        }
+        return 1;
+
+    }
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }

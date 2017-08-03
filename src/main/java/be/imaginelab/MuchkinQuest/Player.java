@@ -146,7 +146,7 @@ public class Player {
         }
     }
 
-    public void playerMove(MapTile.DIRECTION direction){
+    public void move(MapTile.DIRECTION direction){
         if(canPlayerMove(direction)){
             //if tile does not yet exist -> create
             if(munchkinQuest.getMQMap().playerLocations.get(this).neighbours[direction.ordinal()] == null){
@@ -241,7 +241,7 @@ public class Player {
         //TODO
     }
 
-    public void move(){
+    public void moveFree(){
         //Let the munchkin choose a room to move to without paying its cost
         //TODO movement
     }

@@ -5,12 +5,16 @@ package be.imaginelab.MuchkinQuest.MapTiles;
  */
 public class Location {
 
-    public int[] location;
+    public int x, y = 0;
 
-    public Location(){
-        location = new int[]{0,0};
-    }
+    public Location(){}
     public Location(int x, int y){
-        this.location = new int[]{x,y};
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public String toString(){
+        return "(" + x + ", " + y + ")";
     }
 }

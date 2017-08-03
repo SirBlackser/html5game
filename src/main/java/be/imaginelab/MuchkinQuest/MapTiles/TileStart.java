@@ -14,5 +14,7 @@ public class TileStart extends MapTile{
         this.searchable=false;
         this.monstersEndHere=false;
         location = new Location();
+
+        name = "Start";
     }
 }

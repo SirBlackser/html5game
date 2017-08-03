@@ -12,6 +12,6 @@ public class TileDarkRoom extends MapTile {
     }
 
     public TileDarkRoom(){
-
+        name = "Dark Room";
     }
 }

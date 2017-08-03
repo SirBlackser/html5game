@@ -19,7 +19,7 @@ public class WindsOfFate extends Curse {
         if(player.isInCombat){
             player.runAway();
         }else{
-            player.move();
+            player.moveFree();
         }
     }
 }

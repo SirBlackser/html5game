@@ -13,6 +13,7 @@ public class Terminal implements MouseListener, KeyListener{
     MunchkinQuest munchkinQuest;
     public Terminal(MunchkinQuest munchkinQuest){
         this.munchkinQuest = munchkinQuest;
+        System.out.println("Type '?' for help.");
     }
 
     @Override
@@ -62,16 +63,32 @@ public class Terminal implements MouseListener, KeyListener{
                 System.out.println("ended Turn");
                 munchkinQuest.nextPlayer();
                 break;
+            case 'm':
+                System.out.println("Map:");
+                System.out.println(munchkinQuest.getMQMap());
+                break;
             case '?':
                 System.out.println("Help:");
                 System.out.println("\th: Show Hand");
                 System.out.println("\te: End turn.");
+                System.out.println("\tm: Map details");
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         //System.out.println("Pressed");
+        switch (e.getKeyCode()){
+            case KeyEvent.VK_UP:
+                //System.out.println("Up");
+                break;
+            case KeyEvent.VK_RIGHT:
+                break;
+            case KeyEvent.VK_DOWN:
+                break;
+            case KeyEvent.VK_LEFT:
+                break;
+        }
     }
 
     @Override

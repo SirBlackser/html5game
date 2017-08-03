@@ -15,5 +15,7 @@ public class TileArmoury extends MapTile{
     public TileArmoury(){
         this.bonuses.add(Class.CLASSES.WARRIOR);
         this.bonuses.add(Class.CLASSES.PALADIN);
+
+        name = "Armoury";
     }
 }

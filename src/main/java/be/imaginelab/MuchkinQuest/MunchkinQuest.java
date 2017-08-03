@@ -157,6 +157,10 @@ public class MunchkinQuest {
     }
     public MapTile getMQStartTile() {return MQMap.map.get(0);}
 
+    public void moveActivePlayer(MapTile.DIRECTION direction){
+        activePlayer.move(direction);
+    }
+
 
     public List<DXM> getDXM(int number){
         List<DXM> chosen = new ArrayList<>();

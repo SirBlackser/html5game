@@ -52,13 +52,13 @@ public class MQMap {
         //Determine new tile's location
         Location newTileLocation;
         switch (direction){
-            case UP: newTileLocation = new Location(current.location.location[0], current.location.location[1]-1);
+            case UP: newTileLocation = new Location(current.location.x, current.location.y-1);
             break;
-            case RIGHT: newTileLocation = new Location(current.location.location[0]+1, current.location.location[1]);
+            case RIGHT: newTileLocation = new Location(current.location.x+1, current.location.y);
             break;
-            case DOWN: newTileLocation = new Location(current.location.location[0], current.location.location[1]+1);
+            case DOWN: newTileLocation = new Location(current.location.x, current.location.y+1);
             break;
-            case LEFT: newTileLocation = new Location(current.location.location[0]-1, current.location.location[1]);
+            case LEFT: newTileLocation = new Location(current.location.x-1, current.location.y);
             default: newTileLocation = new Location(0,0);
         }
 
@@ -78,8 +78,8 @@ public class MQMap {
 
     public MapTile[] getNeighbouringTiles(MapTile current){
         int x,y;
-        x= current.location.location[0];
-        y=current.location.location[1];
+        x= current.location.x;
+        y=current.location.y;
         MapTile[] tiles = new MapTile[4];
         //up
         try{
@@ -110,8 +110,8 @@ public class MQMap {
     
     public Door[] getNeighbouringDoors(MapTile current){
         int x,y;
-        x= current.location.location[0];
-        y=current.location.location[1];
+        x= current.location.x;
+        y=current.location.y;
         Door[] doors = new Door[4];
         //up
         try{
@@ -171,6 +171,19 @@ public class MQMap {
         //TODO implement method
         //Just move in relative direction based on location
         //AND THE MOVES HAVE TO BE LEGAL
+    }
+
+    @Override
+    public String toString(){
+        String string = "";
+        Collections.sort(map);
+        int y = map.get(0).location.y;
+        for(MapTile tile : map){
+            System.out.print("\t" + tile);
+            System.out.println("\t" + tile.location);
+        }
+
+        return string;
     }
 
 }
