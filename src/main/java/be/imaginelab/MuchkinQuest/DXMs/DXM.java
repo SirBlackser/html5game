@@ -28,4 +28,9 @@ public abstract class DXM {
     //protected abstract List<Object> canUseOn(MunchkinQuest munchkinQuest);
     //use on target
     protected abstract void use(Object target);
+
+    @Override
+    public String toString(){
+        return name;
+    }
 }

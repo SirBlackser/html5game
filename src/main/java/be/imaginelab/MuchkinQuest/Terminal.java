@@ -1,5 +1,7 @@
 package be.imaginelab.MuchkinQuest;
 
+import be.imaginelab.MuchkinQuest.DXMs.DXM;
+
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.EventListener;
@@ -42,9 +44,28 @@ public class Terminal implements MouseListener, KeyListener{
     public void keyTyped(KeyEvent e) {
         //System.out.println("Typed");
         switch (e.getKeyChar()){
-            case 'a':
-                System.out.println("");
-                //munchkinQuest.
+            //Player actions
+            //TODO exit room
+            //TODO search
+            //TODO pick up
+            //TODO make deal
+            //TODO sell
+            //TODO die
+            //TODO End turn
+            case 'h':
+                System.out.println("Current Hand:");
+                for(DXM dxm : munchkinQuest.activePlayer.dxms){
+                    System.out.println("\t" + dxm);
+                }
+                break;
+            case 'e':
+                System.out.println("ended Turn");
+                munchkinQuest.nextPlayer();
+                break;
+            case '?':
+                System.out.println("Help:");
+                System.out.println("\th: Show Hand");
+                System.out.println("\te: End turn.");
         }
     }
 

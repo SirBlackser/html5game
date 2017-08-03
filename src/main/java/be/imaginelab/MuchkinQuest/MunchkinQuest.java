@@ -17,6 +17,7 @@ import be.imaginelab.MuchkinQuest.Treasures.Treasure;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -26,6 +27,16 @@ import java.util.Random;
 public class MunchkinQuest {
 
     public static boolean isDebug = true;
+
+    public int numPlayers = 2;
+    List<Player> players = new ArrayList<>();
+    Iterator playerIterator;
+    public Player activePlayer;
+
+    List<DXM> dxms = new ArrayList<DXM>();
+    List<Treasure> treasures = new ArrayList<Treasure>();
+
+    MQMap MQMap = new MQMap(this);
 
     public static void main(String args[]){
         new MunchkinQuest();
@@ -49,14 +60,6 @@ public class MunchkinQuest {
 
     }
 
-    public int numPlayers = 2;
-    Player[] players;
-
-    List<DXM> dxms = new ArrayList<DXM>();
-    List<Treasure> treasures = new ArrayList<Treasure>();
-
-    MQMap MQMap = new MQMap(this);
-
     public void init(int numPlayers){
 
         //TODO Spawn random DXM deck
@@ -66,7 +69,7 @@ public class MunchkinQuest {
         //TODO Spawn random Monster deck
 
         this.numPlayers = numPlayers;
-        players = new Player[numPlayers];
+
         //init players
         Colors colors = new Colors();
         for(int i = 0; i < numPlayers; i++){
@@ -74,8 +77,8 @@ public class MunchkinQuest {
             List<DXM> dxms = getDXM(3);
             //TODO get 3 random treasures
             List<Treasure> treasures = getTreasure(3);
-            players[i] = new Player(colors.getNext(), this, dxms, treasures);
-            getMQMap().playerLocations.put(players[i], getMQMap().startTile);
+            players.add(new Player(colors.getNext(), this, dxms, treasures));
+            getMQMap().playerLocations.put(players.get(i), getMQMap().startTile);
         }
 
         //TODO roll for turn order
@@ -83,9 +86,21 @@ public class MunchkinQuest {
         //TODO all players may play races, classes and items to set up their character
 
         //TODO Start game
-        players[0].isActive = true;
-        players[0].startTurn();
+        playerIterator = players.iterator();
+        activePlayer = (Player) playerIterator.next();
+        activePlayer.isActive = true;
+        activePlayer.startTurn();
+    }
 
+    public void nextPlayer(){
+        //deactivate player
+        activePlayer.isActive = false;
+        if(!playerIterator.hasNext()){
+            playerIterator = players.iterator();
+        }
+        activePlayer = (Player) playerIterator.next();
+        activePlayer.isActive = true;
+        activePlayer.startTurn();
     }
 
     private void initDXM(){

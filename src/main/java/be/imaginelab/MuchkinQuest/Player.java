@@ -231,6 +231,12 @@ public class Player {
         }
     }
 
+    public void endTurn(){
+        if(this.isActive){
+            munchkinQuest.nextPlayer();
+        }
+    }
+
     public void runAway(){
         //TODO
     }
