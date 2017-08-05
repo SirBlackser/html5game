@@ -147,14 +147,22 @@ public class Player {
     }
 
     public void move(MapTile.DIRECTION direction){
+        //TODO Door cost etc.
+
+        if(isDebug){
+
+        }
         if(canPlayerMove(direction)){
+            MQMap map = munchkinQuest.getMQMap();
             //if tile does not yet exist -> create
-            if(munchkinQuest.getMQMap().playerLocations.get(this).neighbours[direction.ordinal()] == null){
-                munchkinQuest.getMQMap().addTile(munchkinQuest.getMQMap().playerLocations.get(this), direction);
+            if(map.playerLocations.get(this).neighbours[direction.ordinal()] == null){
+                map.addTile(map.playerLocations.get(this), direction);
             }
 
             //then move in direction
-            munchkinQuest.getMQMap().playerLocations.put(this, munchkinQuest.getMQMap().map.get(munchkinQuest.getMQMap().map.indexOf(munchkinQuest.getMQMap().playerLocations.get(this).neighbours[direction.ordinal()])));
+            //put Player and Desired MapTile
+            map.playerLocations.put(this, 
+                    map.map.get(map.map.indexOf(map.playerLocations.get(this).neighbours[direction.ordinal()])));
 
 
         }
@@ -212,10 +220,10 @@ public class Player {
 
     public void discardAfterCombat(){
         for(Object o : discardAfterCombat) {
-            if (o.getClass() == Equipment.class) {
+            if (o instanceof Equipment) {
                 equipment.remove(o);
             }
-            if (o.getClass() == Curse.class) {
+            if (o instanceof Curse) {
                 curses.remove(o);
             }
         }

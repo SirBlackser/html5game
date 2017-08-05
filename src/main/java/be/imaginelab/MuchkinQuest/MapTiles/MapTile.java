@@ -17,7 +17,7 @@ abstract public class MapTile implements Comparable {
         UP, RIGHT, DOWN, LEFT
     }
 
-    public DIRECTION getOppositeDir(DIRECTION dir){
+    public static DIRECTION getOppositeDir(DIRECTION dir){
         switch (dir){
             case UP: return DIRECTION.DOWN;
             case DOWN: return DIRECTION.UP;
@@ -49,11 +49,11 @@ abstract public class MapTile implements Comparable {
 
     @Override
     public boolean equals(Object o){
-        if(o.getClass().equals(MapTile.class)){
+        if(o instanceof MapTile){
             return (((MapTile) o).location.equals(this.location));
         }
 
-        if(o.getClass().equals(Location.class)){
+        if(o instanceof Location){
             return o.equals(this.location);
         }
 
@@ -64,7 +64,7 @@ abstract public class MapTile implements Comparable {
 
     @Override
     public int compareTo(Object o){
-        if(o.getClass().equals(MapTile.class)) {
+        if(o instanceof MapTile) {
             MapTile mapTile = (MapTile) o;
             if (this.location.y < mapTile.location.y){
                 return 1;

@@ -59,6 +59,7 @@ public class MQMap {
             case DOWN: newTileLocation = new Location(current.location.x, current.location.y+1);
             break;
             case LEFT: newTileLocation = new Location(current.location.x-1, current.location.y);
+            break;
             default: newTileLocation = new Location(0,0);
         }
 
@@ -67,6 +68,8 @@ public class MQMap {
         //Add doors to tile
         newTile.doors = getNeighbouringDoors(newTile);
         newTile.neighbours = getNeighbouringTiles(newTile);
+        updateNeighbours(newTile);
+        map.add(newTile);
     }
 
     public MapTile getTileByLocation(int x, int y){
@@ -83,25 +86,25 @@ public class MQMap {
         MapTile[] tiles = new MapTile[4];
         //up
         try{
-            tiles[0] = map.get(map.indexOf(new Location(x,y-1))).neighbours[MapTile.DIRECTION.DOWN.ordinal()];
+            tiles[0] = map.get(map.indexOf(new Location(x,y-1)));
         }catch (IndexOutOfBoundsException e){
             tiles[0] = null;
         }
         //right
         try{
-            tiles[1] = map.get(map.indexOf(new Location(x+1,y))).neighbours[MapTile.DIRECTION.LEFT.ordinal()];
+            tiles[1] = map.get(map.indexOf(new Location(x+1,y)));
         }catch (IndexOutOfBoundsException e){
             tiles[1] = null;
         }
         //down
         try{
-            tiles[2] = map.get(map.indexOf(new Location(x,y+1))).neighbours[MapTile.DIRECTION.UP.ordinal()];
+            tiles[2] = map.get(map.indexOf(new Location(x,y+1)));
         }catch (IndexOutOfBoundsException e){
             tiles[2] = null;
         }
         //left
         try{
-            tiles[3] = map.get(map.indexOf(new Location(x-1,y))).neighbours[MapTile.DIRECTION.RIGHT.ordinal()];
+            tiles[3] = map.get(map.indexOf(new Location(x-1,y)));
         }catch (IndexOutOfBoundsException e){
             tiles[3] = null;
         }
@@ -138,6 +141,28 @@ public class MQMap {
             doors[3] = new Door();
         }
         return doors;
+    }
+
+    private void updateNeighbours(MapTile current){
+        int x,y;
+        x= current.location.x;
+        y=current.location.y;
+        //up
+        try{
+            map.get(map.indexOf(new Location(x,y-1))).neighbours[MapTile.DIRECTION.DOWN.ordinal()] = current;
+        }catch (IndexOutOfBoundsException e){        }
+        //right
+        try{
+            map.get(map.indexOf(new Location(x+1,y))).neighbours[MapTile.DIRECTION.LEFT.ordinal()] = current;
+        }catch (IndexOutOfBoundsException e){        }
+        //down
+        try{
+            map.get(map.indexOf(new Location(x,y+1))).neighbours[MapTile.DIRECTION.UP.ordinal()] = current;
+        }catch (IndexOutOfBoundsException e){        }
+        //left
+        try{
+            map.get(map.indexOf(new Location(x-1,y))).neighbours[MapTile.DIRECTION.RIGHT.ordinal()] = current;
+        }catch (IndexOutOfBoundsException e){        }
     }
 
     public void setPlayerOnStartTile(Player player){

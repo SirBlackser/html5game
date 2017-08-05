@@ -43,16 +43,18 @@ public class MunchkinQuest {
     }
 
     public MunchkinQuest(){
-        JFrame f = new JFrame("MyFrame");
-        Canvas c = new Canvas();
-        Terminal t = new Terminal(this);
-        c.addMouseListener(t);
-        c.addKeyListener(t);
-        c.setVisible(true);
+        if(isDebug) {
+            JFrame f = new JFrame("MyFrame");
+            Canvas c = new Canvas();
+            Terminal t = new Terminal(this);
+            c.addMouseListener(t);
+            c.addKeyListener(t);
+            c.setVisible(true);
 
-        f.add(c);
-        f.setSize(new Dimension(400,400));
-        f.setVisible(true);
+            f.add(c);
+            f.setSize(new Dimension(400, 400));
+            f.setVisible(true);
+        }
 
         //System.out.println(Monster.SIZE.TINY.ordinal());
 

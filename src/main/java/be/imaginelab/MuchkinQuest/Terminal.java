@@ -1,6 +1,7 @@
 package be.imaginelab.MuchkinQuest;
 
 import be.imaginelab.MuchkinQuest.DXMs.DXM;
+import be.imaginelab.MuchkinQuest.MapTiles.MapTile;
 
 import java.awt.event.*;
 import java.io.IOException;
@@ -81,12 +82,16 @@ public class Terminal implements MouseListener, KeyListener{
         switch (e.getKeyCode()){
             case KeyEvent.VK_UP:
                 //System.out.println("Up");
+                munchkinQuest.activePlayer.move(MapTile.DIRECTION.UP);
                 break;
             case KeyEvent.VK_RIGHT:
+                munchkinQuest.activePlayer.move(MapTile.DIRECTION.RIGHT);
                 break;
             case KeyEvent.VK_DOWN:
+                munchkinQuest.activePlayer.move(MapTile.DIRECTION.DOWN);
                 break;
             case KeyEvent.VK_LEFT:
+                munchkinQuest.activePlayer.move(MapTile.DIRECTION.LEFT);
                 break;
         }
     }
